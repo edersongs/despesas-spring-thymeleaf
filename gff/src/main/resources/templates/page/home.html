@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt" 
+	  xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="'layout/default'">
+	
+<head>
+	<title>Gervásio | Principal</title>
+	
+	<th:block layout:fragment="css-extra">
+		<link rel="stylesheet" type="text/css" th:href="@{/bower_components/morris.js/morris.css}"/>
+	</th:block>
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini sidebar-collapse">
+	
+	<section layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				DashBoard <small>Demostrativo Atual</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i></a></li>
+			</ol>
+		</section>
+		
+		<section class="content">
+			
+			<div class="row">
+		
+				<div class="col-lg-3 col-xs-6">
+		          <div class="small-box bg-red">
+		            <div class="inner">
+		              <h2 th:text="${#numbers.formatCurrency(totalDespesa)}"></h2>
+		
+		              <p>Despesas a Pagar</p>
+		            </div>
+		            <div class="icon">
+		              <i class="fa fa-calculator"></i>
+		            </div>
+		            <a th:href="@{/despesas/}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
+		          </div>
+		        </div>
+		        
+		        <div class="col-lg-3 col-xs-6">
+		          <div class="small-box bg-yellow">
+		            <div class="inner">
+		              <h2 th:text="${#numbers.formatCurrency(totalDespesaProxMes)}"></h2>
+		
+		              <p>A Pagar próx. Mês</p>
+		            </div>
+		            <div class="icon">
+		              <i class="fa fa-plus"></i>
+		            </div>
+		            <a href="#" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
+		          </div>
+		        </div>
+
+		        <div class="col-lg-3 col-xs-6">
+		          <div class="small-box bg-green">
+		            <div class="inner">
+		              <h2 th:text="${#numbers.formatCurrency(totalContas)}"></h2>
+		
+		              <p>Saldo em Contas</p>
+		            </div>
+		            <div class="icon">
+		              <i class="fa fa-usd"></i>
+		            </div>
+		            <a href="#" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
+		          </div>
+		        </div>
+
+		        <div class="col-lg-3 col-xs-6">
+		          <div class="small-box bg-aqua">
+		            <div class="inner">
+		              <h2 th:text="${#numbers.formatCurrency(limiteDisponivel)}"></h2>
+		
+		              <p>Saldo em Cartões</p>
+		            </div>
+		            <div class="icon">
+		              <i class="fa fa-credit-card"></i>
+		            </div>
+		            <a href="#" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
+		          </div>
+		   		</div>
+		        
+     		</div>
+			
+			<div class="box box-default">
+				<div class="box-header with-border">
+		            <h3 class="box-title">Despesas por categoria</h3>
+		            
+		            <div class="box-tools pull-right">
+	                	<h3 class="box-title">Despesas por mês</h3>
+	              	</div>
+	          	</div>
+	          	
+	          	<div class="box-body">
+	          		<div class="row">
+	          			<div class="col-md-4">
+	          				<div class="chart-responsive">
+				          		<div class="chart" id="chartCategoriaDespesaID" style="height: 300px; position: relative;"></div>
+	          				</div>
+	          			</div>
+	          			<div class="col-md-2">
+			          		<div id="lgCatTotDespID" class="chart-legend clearfix donut-legend"></div>
+	          			</div>
+	          			
+	          			<div class="col-md-6">
+	          				<div class="chart" style="height: 370px; position: relative;">
+					           <canvas id="myChart"></canvas>
+				            </div>
+	          			</div>
+	          		</div>
+				</div>
+			</div>
+				
+		</section>
+		
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/bower_components/morris.js/morris.min.js}"></script>
+		<script th:src="@{/bower_components/raphael/raphael.min.js}"></script>
+		<script th:src="@{/helper/js/chart/graficos-home-config.js}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+	</th:block>
+</body>
+</html>

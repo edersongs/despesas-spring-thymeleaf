@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:gff="http://gff.gervasio.com"
+	layout:decorate="'layout/default'">
+
+<head>
+<title>Gervásio | Principal</title>
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Despesa <small>Cadastro de Despesas</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i></a></li>
+			</ol>
+		</section>
+
+		<section class="content">
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<h3 class="box-title">Dados da Despesa</h3>
+				</div>
+				<form th:object="${despesa}" method="POST" th:action="@{save}" data-toggle="validator">
+					<gff:message/>
+					
+					<div class="box-body">
+						<input type="hidden" th:field="*{codigoDespesa}"/>
+						<div class="row">
+							<div class="col-md-5">
+								<div class="form-group">
+									<label>
+				                      <input type="checkbox" th:field="*{fixa}" class="square">
+				                      	Despesa Fixa ?
+				                    </label>
+				                </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group" gff:classforerror="categoriaDespesa">
+									
+									<label>Tipo Despesa</label> 
+									
+									<a title="Cadastrar novo Tipo de Despesa ?" class="label label-info pull-right" data-toggle="modal" data-target="#modalDespesaID">Novo</a>
+									
+									<select id="tipoDespesaID" onchange="onSelectClick()" class="form-control select2 input-sm" 
+										th:field="*{categoriaDespesa.tipoDespesa}" style="width: 100%;" data-error="Por favor, informe o tipo da despesa." required>
+										<option label="" value=""></option>
+										<option th:each="tipo : ${tiposDespesa}" th:value="${tipo.codigoTipoDespesa}" th:text="${tipo.nome}"></option>
+									</select>
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="form-group" gff:classforerror="categoriaDespesa">
+									
+									<label>Categoria</label> 
+									
+									<a id="pesquisaNewCatID" title="Cadastrar nova Categoria ?" class="label label-info pull-right" data-toggle="modal" data-target="#modalCategoriaDespesaID">Novo</a>
+									
+									<select id="categoriaDespesaID" class="form-control select2 input-sm" th:field="*{categoriaDespesa}" style="width: 100%;"
+										data-error="Por favor, informe o categoria da despesa." required>
+									</select>
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-2">
+								<div class="form-group" gff:classforerror="valor">
+									<label>Valor</label>
+									<div class="input-group">
+										<span class="input-group-addon">R$</i></span>
+										<input type="text" th:field="*{valor}" data-thousands="." data-decimal="," data-prefix="R$ " class="form-control currency input-sm"
+											data-error="Por favor, informe o valor da despesa." required>
+									</div>
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							
+							<div class="col-md-5">
+								<div class="form-group" gff:classforerror="formaPagamento">
+									<label>Forma Pagamento</label> 
+									<select class="form-control select2 input-sm" th:field="*{formaPagamento}" style="width: 100%;" data-error="Por favor, informe de forma de pagamento da despesa." required>
+										<option label="" value=""></option>
+										<option th:each="forma : ${formasPagamento}" th:value="${forma}" th:text="${forma.descricao}"></option>
+									</select>
+									<div class="help-block with-errors"></div>
+								</div>							
+							</div>
+							
+							<div class="col-md-5">
+								<div class="form-group">
+									<label>Cartão de Crédito Utilizado</label> 
+									<select id="selectCartaoID" class="form-control select2 input-sm selectCard" th:field="*{cartao}" style="width: 100%;">
+										<option label="" value=""></option>
+										<option th:each="cartao : ${cartoes}" th:value="${cartao.codigoCartao}" th:text="${cartao.nomeCartao}"></option>
+									</select>
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-2">
+								<div class="form-group">
+									<label>Qde de Parcelas</label> 
+									<input id="qdeParcelasID" type="text" th:field="*{quantidadeParcelas}" onkeypress="return onlyNumber(event);" class="form-control input-sm">
+								</div>
+							</div>
+							
+							<div class="form-group col-md-4">
+			                    <label>Despesa</label> 
+								<select id="statusDespesaID" class="form-control select2 input-sm" th:field="*{status}" style="width: 100%;">
+									<option th:each="sta : ${status}" th:value="${sta}" th:text="${sta.descricao}"></option>
+								</select>
+			                </div>
+			                
+							<div class="form-group col-md-6">
+								<label>Data Vencimento</label>
+								<div id="divDateVendimentoID" class="input-group">
+									<div class="input-group-addon">
+										<i class="fa fa-calendar"></i>
+									</div>
+									<input id="datVencimentoID" type="text" th:field="*{dataVencimento}" class="form-control input-sm datepickerDataVencimentoDespesa">
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Observação</label> 
+									<textarea th:field="*{observacao}" class="form-control input-sm" rows="5"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="box-footer">
+						<button id="salveButtonID" type="submit" class="btn btn-primary" style="width:100px;">Salvar</button>
+						
+						<a class="btn btn-danger" th:href="@{/}" style="width:100px;">Cancelar</a>
+					</div>
+					
+		            <div th:replace="fragments/components/modals/modalNewTipoDespesa :: modalNewTipoDespesa"></div>
+		            <div th:replace="fragments/components/modals/modalNewCategoriaDespesa :: modalNewCategoriaDespesa"></div>
+				</form>
+			</div>
+		</section>
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/helper/js/cadastroRapido-TipoDespesa.js}"></script>
+		<script th:src="@{/helper/js/cadastroRapido-CategoriaDespesa.js}"></script>
+		<script th:src="@{/helper/js/selectAninhado-TipoDespesa-Categoria.js}"></script>
+		<script th:src="@{/helper/js/selectTipoDespesa-Modal-CadRapido-CategoriaDespesa.js}"></script>
+		<script th:src="@{/helper/js/block-field-dataVencimento-cartaoInformado.js}"></script>
+		<script th:src="@{/helper/js/block-field-pagamento-quando-cartaoCredito.js}"></script>
+	</th:block>
+</body>
+</html>

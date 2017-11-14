@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+
+<aside class="main-sidebar" th:fragment="leftMenu">
+	<section class="sidebar">
+		<ul class="sidebar-menu" data-widget="tree">
+			<li class="header">Cadastro</li>
+			
+			<li class="treeview">
+				<a href="#">
+		            <i class="fa fa-calculator"></i> <span>Despesa</span>
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		        </a>
+		        
+	             <ul class="treeview-menu">
+		            <li><a th:href="@{/despesas/add}"><i class="fa fa-circle-o"></i> <span>Nova</span></a></li>
+		            
+		            <li><a th:href="@{/despesas/}"><i class="fa fa-circle-o"></i>Lançamentos</a></li>
+		         </ul>
+		          
+			</li>
+			
+			<li class="treeview">
+				
+				<a>
+		            <i class="fa fa-credit-card"></i> <span>Cartões</span>
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		        </a>
+		        
+	             <ul class="treeview-menu">
+		           
+		            <li><a th:href="@{/cartoes/add}"><i class="fa fa-circle-o"></i> <span>Novo</span></a></li>
+		            
+		            <li><a th:href="@{/cartoes/pagamentos}"><i class="fa fa-circle-o"></i>Pagamento</a></li>
+		            
+		         </ul>
+		         
+			</li>
+			
+			<li class="treeview">
+				
+				<a>
+		            <i class="fa fa-university"></i> <span>Banco</span>
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		        </a>
+		        
+	             <ul class="treeview-menu">
+		           
+		            <li><a th:href="@{/contas/}"><i class="fa fa-circle-o"></i> <span>Conta</span></a></li>
+		            
+		         </ul>
+		         
+			</li>
+		</ul>
+	</section>
+</aside>
+</html>

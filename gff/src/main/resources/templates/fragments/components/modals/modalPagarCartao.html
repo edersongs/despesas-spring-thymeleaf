@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <style>
+      .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+      }
+      .example-modal .modal {
+        background: transparent !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body>
+  	<div th:id="${obj.codigoCartao}" class="modal fade modalPagarCartao" tabindex="-1" role="dialog" th:fragment="modalPagarCartao">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Realizar Pagamento</h4>
+          </div>
+          
+          <form id="form" method="POST" th:action="@{/despesas/fazerPagamentoCartao/{codigoDespesa} (codigoDespesa=${obj.codigoDespesa})}">
+	          <div class="modal-body">
+	            <div class="row">
+		            <div align="center">
+						<h4 class="modal-title">Total do Cartão</h4>
+				        <span th:text="${#numbers.formatCurrency(obj.valor)}"></span>
+					</div>
+					
+					<div class="col-md-12">
+						<div align="center">
+							
+							<div class="input-group">
+								
+								<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+								<input id="valor" type="text" name="valorPagamento" placeholder="Pagar Quanto ?"
+									data-thousands="." data-decimal="," class="form-control currency input-sm" style="with:350px;">
+							</div>
+							
+							<br></br>
+							
+							<div class="form-group">
+								<label>
+			                      <input type="radio" name="conta" value="4" class="minimal" checked>
+			                      	Caixa
+			                    </label>
+			                    
+			                    <label>
+			                      <input type="radio" name="conta" value="6" class="minimal">
+			                      	Bradesco
+			                    </label>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+	          </div>
+	          
+	          <div class="modal-footer">
+	            <button type="submit" class="btn btn-success pull-left js-modal-pagamento-despesa-btn">
+	            	Pagar Despesa</button>
+	            	
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	          </div>
+	          
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

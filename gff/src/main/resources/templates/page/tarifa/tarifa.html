@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body>
+	<div class="row" th:fragment="tarifa">
+		
+		<div class="col-md-3">
+			<div class="form-group">
+				
+				<label>Tipo de tarifa</label> 
+				
+				<select id="tipoTarifaID" class="form-control select2 input-sm" style="width: 100%;" data-error="Por favor, informe o tipo de tarifa." required>
+					<option label="" value=""></option>
+					<option th:each="tipo : ${tiposDeTarifas}" th:value="${tipo.codigoTipoTarifa}" th:text="${tipo.nome}"></option>
+				</select>
+				<div class="help-block with-errors"></div>
+			</div>
+		</div>
+	
+		<div class="col-md-3">
+			<div class="form-group">
+				
+				<label>Nome da tarifa</label> 
+				
+				<input id="nomeTarifaID" type="text" class="form-control input-sm" data-error="Por favor, informe o nome da tarifa." required>
+				<div class="help-block with-errors"></div>
+			</div>
+		</div>
+	
+		<div class="form-group col-md-3">
+		                
+			<label>Valor</label>
+			               
+			<div class="input-group">
+				<span class="input-group-addon">R$</span>
+				<input id="valorTarifaID" type="text" data-thousands="." data-decimal="," data-prefix="R$ " class="form-control currency input-sm" data-error="Por favor, informe o valor da tarifa." required/>
+				
+			</div>
+			<div class="help-block with-errors"></div>
+			
+		</div>											
+		
+		<div class="col-md-1">
+			<div class="form-group">
+				<label></label>
+				<a id="addTarefaID" class="btn btn-primary form-control" style="width:100px;">Add</a>
+				
+			</div>
+		</div>
+		
+		<div id="tabelaTarifas" class="col-md-12">
+			
+			<table id="tableTarifa" class="table table-hover">
+				<thead>
+					<tr>
+				     <th>Tipo</th>
+				     <th>Nome</th>
+				     <th>Valor</th>
+				  	</tr>
+				</thead>
+			
+				<tbody>
+					<tr th:each="obj : ${tarifas}">
+						<td data-title="Tipo" th:text="${obj.tipoTarifa.nome}"></td>
+						<td data-title="Tipo" th:text="${obj.nome}"></td>
+						<td data-title="Valor" th:text="${#numbers.formatCurrency(obj.valor)}"></td>
+				  	</tr>
+				</tbody>
+			                
+				<tfoot>
+				   <tr>
+				       <th></th>
+				       <th></th>
+				       <th></th>
+				   </tr>
+				</tfoot>
+			</table>
+			
+		</div>
+	</div>  
+	
+	<th:block layout:fragment="javascript-extra">
+		<script type="text/javascript">
+			var values = $('');
+		</script>
+	</th:block>
+</body>
+</html>

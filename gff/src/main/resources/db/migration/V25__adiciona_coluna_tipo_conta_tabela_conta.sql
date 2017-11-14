@@ -1,0 +1,1 @@
+alter table tconta add column tipoConta varchar(30) not null;

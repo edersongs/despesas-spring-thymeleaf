@@ -1,0 +1,5 @@
+CREATE TABLE TTIPOTARIFA (
+	codigoTipoTarifa BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	nome varchar(80) NOT NULL,
+	descricao varchar(255) NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

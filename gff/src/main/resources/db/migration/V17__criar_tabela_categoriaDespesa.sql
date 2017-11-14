@@ -1,0 +1,6 @@
+CREATE TABLE TCATEGORIADESPESA (
+	codigoCategoria BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(50) NOT NULL,
+	descricao VARCHAR(200) NULL,
+	codigoTipoDespesa bigint(20) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

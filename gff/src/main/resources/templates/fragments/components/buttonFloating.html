@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/helper/css/buttonFloating.css}"/>
+</head>
+<body>	
+	<div id="container-floating" th:fragment="buttonFloating">
+
+         <div class="nd4 nds" data-toggle="tooltip" data-placement="left" data-original-title="contract@gmail.com"><img class="reminder">
+             <p class="letter">Nova Receita</p>
+         </div>
+         <div class="nd3 nds" data-toggle="tooltip" data-placement="left" data-original-title="Reminder"><img class="reminder"/>
+         	<p class="letter">Novo Cartão</p>
+         </div>
+         <div class="nd1 nds" data-toggle="tooltip" data-placement="left" data-original-title="Edoardo@live.it"><img class="reminder">
+             <p class="letter">Nova Despesa</p>
+         </div>
+
+         <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
+             <p class="plus">+</p>
+             <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+         </div>
+
+     </div>
+</body>
+</html>

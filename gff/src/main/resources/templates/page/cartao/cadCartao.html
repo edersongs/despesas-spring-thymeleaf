@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:gff="http://gff.gervasio.com"
+	layout:decorate="'layout/default'">
+
+<head>
+<title>Gervásio | Principal</title>
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Cartão <small>Cadastro de Cartões</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i></a></li>
+			</ol>
+		</section>
+
+		<section class="content">
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<h3 class="box-title">Dados do Cartão</h3>
+				</div>
+				<form th:object="${cartao}" method="POST" th:action="@{save}" data-toggle="validator">
+					<gff:message/>
+					
+					<div class="box-body">
+						
+						<input type="hidden" th:field="*{codigoCartao}"/>
+							
+						<div class="nav-tabs-custom">
+							
+							<ul class="nav nav-tabs">
+				              <li class="active"><a href="#tab_cartao" data-toggle="tab">Cartão</a></li>
+				              <li><a href="#tab_tarifas" data-toggle="tab">Tarifas</a></li>
+				            </ul>
+					            
+				            <div class="tab-content">
+				            	<div class="tab-pane active" id="tab_cartao">
+				            		<div class="row">
+				            			<div class="col-md-2">
+											<div class="form-group" gff:classforerror="tipoCartao">
+												<label>Tipo Cartão</label> 
+												<select	class="form-control select2 input-sm" th:field="*{tipoCartao}" style="width: 100%;" data-error="Por favor, informe o tipo do cartão." required>
+													<option label="" value=""></option>
+													<option th:each="tipo : ${tipoDeCartoes}" th:value="${tipo}" th:text="${tipo.nome}"></option>
+												</select>
+												<div class="help-block with-errors"></div>
+											</div>	
+										</div>
+			
+										<div class="col-md-4">
+											<div class="form-group" gff:classforerror="nomeCartao">
+												<label>Nome Cartão</label> 
+												<input type="text" th:field="*{nomeCartao}" class="form-control input-sm" data-error="Por favor, informe o nome do cartão." required>
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-4">
+											<div class="form-group" gff:classforerror="numeroCartao">
+												<label>Número do Cartão</label> 
+												<input type="text" th:field="*{numeroCartao}" onkeypress="return onlyNumber(event);" class="form-control input-sm" 
+													data-error="Por favor, informe o número do cartão." required>
+													
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-2">
+											<div class="form-group" gff:classforerror="bandeira">
+												<label>Bandeira</label> 
+												<input type="text" th:field="*{bandeira}" class="form-control input-sm" data-error="Por favor, informe a bandeira do cartão." required>
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+				            		</div>
+				            		
+				            		<div class="row">
+										<div class="col-md-1">
+											<div class="form-group" gff:classforerror="codigoSeguranca">
+												<label>Cvv</label> 
+												<input type="text" th:field="*{codigoSeguranca}" onkeypress="return onlyNumber(event);" class="form-control input-sm"
+													data-error="Por favor, informe o cvv do cartão." required>
+													<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-2">
+											<div class="form-group" gff:classforerror="limite">
+												<label>Limite</label>
+												<div class="input-group">
+													<span class="input-group-addon">R$</span>
+													<input type="text" th:field="*{limite}" data-thousands="." data-decimal="," data-prefix="R$ " class="form-control currency input-sm" 
+														data-error="Por favor, informe o limite do cartão." required>
+												</div>
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-2">
+											<label>Data Vencimento</label>
+											<div class="input-group" gff:classforerror="dataVencimento">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<input type="text" th:field="*{dataVencimento}" class="form-control input-sm datepickerVencimentoCartao"
+													data-error="Por favor, informe a data de vencimento do cartão." required>
+													<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-2">
+											<label>Data Fechamento Fat</label>
+											<div class="input-group" gff:classforerror="dataFechamento">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<input type="text" th:field="*{dataFechamento}" class="form-control input-sm datepicker"
+													data-error="Por favor, informe a data de fechamento do cartão." required>
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-2">
+											<label>Data Validade</label>
+											<div id="datepickerMesAno" class="input-group date" gff:classforerror="dataValidade">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<input type="text" th:field="*{dataValidade}" class="form-control input-sm"
+													data-error="Por favor, informe a data de validade do cartão." required>
+													<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-3">
+											<label>Conta</label>
+											<select	class="form-control select2 input-sm" th:field="*{conta}" style="width: 100%;">
+												<option label="" value=""></option>
+												<option th:each="c : ${contas}" th:value="${c.codigoConta}" th:text="${c.tipoConta.descricao + ' - ' + c.nome}"></option>
+											</select>
+										</div>
+									</div>
+				            	</div>
+				            	
+				            	<div class="tab-pane" id="tab_tarifas">
+			                
+				                <div th:replace="page/tarifa/tarifa :: tarifa"></div>
+				                
+				              </div>
+				            </div>
+						</div>
+					</div>
+					<div class="box-footer">
+						<button type="submit" class="btn btn-primary" style="width:100px;">Salvar</button>
+						<a class="btn btn-danger" th:href="@{/}" style="width:100px;">Cancelar</a>
+					</div>
+				</form>
+			</div>
+		</section>
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/helper/js/add-tarifa-datatable.js}"></script>
+		<script th:src="@{/helper/js/valida-campos-tarifa.js}"></script>
+		
+	</th:block>
+</body>
+</html>

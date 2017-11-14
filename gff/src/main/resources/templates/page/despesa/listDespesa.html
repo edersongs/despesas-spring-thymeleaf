@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="'layout/default'">
+
+<head>
+<title>Gervásio | Principal</title>
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini sidebar-collapse">
+	<section layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Despesa <small>Demostrativo Despesas</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i></a></li>
+			</ol>
+		</section>
+
+		<section class="content">
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<form id="formFilterDespesaID" method="GET" th:action="@{/despesas/pesquisar}">
+						<div class="form-group col-md-3">
+							<div id="datepickerMes" class="input-group date">
+								<div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</div>
+								<input type="text" class="form-control input-sm" name="dataFiltro" placeholder="Filtrar por mês">
+							</div>
+						</div>
+					</form>
+					
+					<a class="btn btn-primary pull-right" th:href="@{/despesas/add}">Nova Despesa</a>
+				</div>
+				<div class="box-body table-responsive no-padding">
+					<table id="tableID" class="table table-hover ">
+                    	<thead>
+	                    	<tr>
+		                        <th>Data</th>
+		                        <th>Valor</th>
+		                        <th>Tipo</th>
+		                        <th>Categoria</th>
+		                        <th>Forma Pagamento</th>
+		                        <th>Vencimento</th>
+		                        <th>Parcelas</th>
+		                        <th>Fixa</th>
+		                        <th>Status</th>
+		                        <th>Observação</th>
+	                      	</tr>
+                      	</thead>
+
+                      	<tbody>
+	                      <tr th:each="obj : ${despesas}" th:styleappend="${obj.atrasado} ? 'color: red;' : 'color: black;'">
+	                        <td data-title="Data" th:text="${#dates.format(obj.dataDespesa, 'dd/MM/yyyy')}"></td>
+	                        <td data-title="Valor" th:text="${#numbers.formatCurrency(obj.valor)}"></td>
+	                        <td data-title="Tipo Despesa" th:text="${obj.categoriaDespesa.tipoDespesa.nome}"></td>
+	                        <td data-title="Categoria" th:text="${obj.categoriaDespesa.nome}"></td>
+	                        <td data-title="Forma Pagamento" th:text="${obj.formaPagamento.descricao}"></td>
+	                        <td data-title="Vencimento" th:text="${#calendars.format(obj.dataVencimento, 'dd/MM/yyyy')}"></td>
+	                        <td data-title="Parcelas" th:text="${obj.parcelasPagas + '/' + obj.quantidadeParcelas}"></td>
+	                        <td data-title="Despesa Fixa" th:text="${obj.fixa ? 'Sim' : 'Não'}"></td>
+	                        <td data-title="Status">
+								<!-- <span th:if="${obj.status.codigo == 1}" class="label label-success" th:text="${obj.status.descricao}"></span>
+								<span th:if="${obj.status.codigo == 2}" class="label label-danger" th:text="${obj.status.descricao}"></span>
+								<span th:if="${obj.status.codigo == 3}" class="label label-warning" th:text="${obj.status.descricao}"></span> -->
+								<a th:href="'#'+${obj.codigoDespesa}" data-toggle="modal">
+									<span th:if="${obj.status.codigo == 1}" class="label label-success" th:text="${obj.status.descricao}"></span>
+									<span th:if="${obj.status.codigo == 2}" class="label label-danger" th:text="${obj.status.descricao}"></span>
+									<span th:if="${obj.status.codigo == 3}" class="label label-warning" th:text="${obj.status.descricao}"></span>
+								</a>
+								<div th:replace="fragments/components/modals/modalPagamentoDespesa :: modalPagamentoDespesa"></div>
+	                        </td>
+	                        <td data-title="Despesa Fixa" th:text="${obj.observacao}"></td>
+	                      </tr>
+	                    </tbody>
+	                    
+	                    <tfoot>
+				            <tr>
+				                <th th:text="${#numbers.formatCurrency(#aggregates.sum(totalDespesas))}"></th>
+				                <th></th>
+				                <th></th>
+				                <th></th>
+				                <th></th>
+				                <th></th>
+				                <th></th>
+				                <th></th>
+				                <th></th>
+				            </tr>
+				        </tfoot>
+	                </table>
+				</div>
+			</div>
+		</section>
+	</section>
+	
+	<!-- <td data-title="Status">
+								<a th:href="'#'+${obj.codigoDespesa}" data-toggle="modal">
+									<span th:if="${obj.status.codigo == 1}" class="label label-success" th:text="${obj.status.descricao}"></span>
+									<span th:if="${obj.status.codigo == 2}" class="label label-danger" th:text="${obj.status.descricao}"></span>
+									<span th:if="${obj.status.codigo == 3}" class="label label-warning" th:text="${obj.status.descricao}"></span>
+								</a>
+								<div th:replace="fragments/components/modals/modalPagamentoDespesa :: modalPagamentoDespesa"></div>
+	                        </td> -->
+	
+</body>
+</html>

@@ -1,0 +1,1 @@
+ALTER TABLE tdespesa add column statusDespesa varchar(60) not null;

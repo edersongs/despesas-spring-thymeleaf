@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:gff="http://gff.gervasio.com"
+	layout:decorate="'layout/default'">
+
+<head>
+<title>Gervásio | Principal</title>
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Pagamento <small>Pagamento de Cartões</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i></a></li>
+			</ol>
+		</section>
+
+		<section class="content">
+			<div class="box box-default">
+				<!-- <div class="box-header with-border">
+					
+					<a class="btn btn-success pull-right">Pagar</a>
+				</div> -->
+					
+					<div class="box-body">
+						
+							<div class="box-body table-responsive no-padding">
+								<table id="tableID" class="table table-hover ">
+			                    	<thead>
+				                    	<tr>
+					                        <th>Nome</th>
+					                        <th>Bandeira</th>
+					                        <th>Limite</th>
+				                      	</tr>
+			                      	</thead>
+									
+			                      	<tbody>
+				                      	<tr th:each="obj : ${cartoes}">
+					                        <td data-title="Nome" th:text="${obj.nomeCartao}"></td>
+					                        <td data-title="Bandeira" th:text="${obj.bandeira}"></td>
+					                        <td data-title="Limite" th:text="${#numbers.formatCurrency(obj.limite)}"></td>
+					                        <td th:hidden data-title="Pagar">
+					                        	
+					                        	<form th:action="@{/cartoes/listaDespesasCartaoCredito/} + ${obj.codigoCartao}" method="GET">
+						                        	<a id="pagarCartaoID" th:href="'#'+${obj.codigoCartao}" type="submit"  data-toggle="modal">
+														<span class="label label-success">Pagar</span>
+													</a>
+									            </form>
+												
+					                        	<div th:replace="fragments/components/modals/modalPagarCartao :: modalPagarCartao"></div>
+					                        </td>
+					                    </tr>
+				                    </tbody>
+				                    
+				                    <tfoot>
+							            <tr>
+							                <th></th>
+							                <th></th>
+							                <th></th>
+							            </tr>
+							        </tfoot>
+				                </table>
+							</div>
+						
+						</div>
+						
+					<div class="box-footer">
+						
+					</div>
+					
+			</div>
+		</section>
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		
+	</th:block>
+</body>
+</html>

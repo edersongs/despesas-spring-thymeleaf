@@ -1,0 +1,1 @@
+ALTER TABLE tdespesa add column pago boolean not null;

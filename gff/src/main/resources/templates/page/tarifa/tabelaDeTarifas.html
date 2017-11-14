@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+	<div id="tabelaTarifas" class="col-md-12">
+			
+		<table id="tableTarifa" class="table table-hover">
+			<thead>
+				<tr>
+			     <th>Tipo</th>
+			     <th>Nome</th>
+			     <th>Valor</th>
+			  	</tr>
+			</thead>
+		
+			<tbody>
+				<tr th:each="obj : ${tarifas}">
+					<td data-title="Tipo" th:text="${obj.tipoTarifa.nome}"></td>
+					<td data-title="Tipo" th:text="${obj.nome}"></td>
+					<td data-title="Valor" th:text="${#numbers.formatCurrency(obj.valor)}"></td>
+			  	</tr>
+			</tbody>
+		                
+			<tfoot>
+			   <tr>
+			       <th></th>
+			       <th></th>
+			       <th></th>
+			   </tr>
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>

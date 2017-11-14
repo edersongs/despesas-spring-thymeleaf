@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:gff="http://gff.gervasio.com"
+	layout:decorate="'layout/default'">
+
+<head>
+<title>Gervásio | Principal</title>
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<section class="content-header">
+			<h1>
+				Conta <small>Cadastro de Contas</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i></a></li>
+			</ol>
+		</section>
+
+		<section class="content">
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<h3 class="box-title">Dados da Conta</h3>
+				</div>
+				<form th:object="${conta}" method="POST" th:action="@{save}" data-toggle="validator">
+					<gff:message/>
+					
+					<div class="box-body">
+						<input type="hidden" th:field="*{codigoConta}"/>
+						<div class="row">
+							
+							<div class="col-md-12">
+					          <div class="nav-tabs-custom">
+					            <ul class="nav nav-tabs">
+					              <li class="active"><a href="#tab_conta" data-toggle="tab">Conta</a></li>
+					              <li><a href="#tab_tarifas" data-toggle="tab">Tarifas</a></li>
+					            </ul>
+					            <div class="tab-content">
+					              <div class="tab-pane active" id="tab_conta">
+					                <div class="row">
+						                <div class="col-md-4">
+											<div class="form-group" gff:classforerror="nome">
+												
+												<label>Nome da conta</label> 
+												
+												<input type="text" th:field="*{nome}" class="form-control input-sm" data-error="Por favor, informe o nome da conta." required>
+												
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-5">
+											<div class="form-group" gff:classforerror="titular">
+												
+												<label>Titular da conta</label> 
+												
+												<input type="text" th:field="*{titular}" class="form-control input-sm" data-error="Por favor, informe o titular da conta." required>
+												
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="form-group col-md-3" gff:classforerror="tipoConta">
+											
+											<label>Tipo de conta</label> 
+											
+											<select class="form-control select2 input-sm" th:field="*{tipoConta}" style="width: 100%;" data-error="Por favor, informe o tipo da conta." required>
+												<option label="" value=""></option>
+												<option th:each="tipo : ${tiposContas}" th:value="${tipo}" th:text="${tipo.descricao}"></option>
+											</select>
+											<div class="help-block with-errors"></div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col-md-3">
+											<div class="form-group" gff:classforerror="agencia">
+												
+												<label>Agência</label>
+												
+												<input type="text" th:field="*{agencia}" onkeypress="return onlyNumber(event);" class="form-control input-sm"
+													data-error="Por favor, informe a agência da conta." required>
+													
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-1">
+											<div class="form-group" gff:classforerror="digitoAgencia">
+												
+												<label>Dígito</label>
+												
+												<input type="text" th:field="*{digitoAgencia}" onkeypress="return onlyNumber(event);" class="form-control input-sm"
+													data-error="Por favor, informe o digito da agência." required>
+													
+												<div class="help-block with-errors"></div>						
+											</div>	
+										</div>
+										
+										<div class="col-md-3">
+											<div class="form-group" gff:classforerror="conta">
+												
+												<label>Conta</label>
+												
+												<input type="text" th:field="*{conta}" onkeypress="return onlyNumber(event);" class="form-control input-sm"
+													data-error="Por favor, informe a conta." required>
+												
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="col-md-1">
+											<div class="form-group" gff:classforerror="digitoConta">
+												
+												<label>Dígito</label>
+												
+												<input type="text" th:field="*{digitoConta}" onkeypress="return onlyNumber(event);" class="form-control input-sm"
+													data-error="Por favor, informe o digito da conta." required>
+													
+												<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+										<div class="form-group col-md-4" gff:classforerror="saldo">
+						                    
+						                    <label>Saldo</label>
+						                    
+											<div class="input-group">
+												<span class="input-group-addon">R$</span>
+												<input type="text" th:field="*{saldo}" data-thousands="." data-decimal="," data-prefix="R$ " 
+													class="form-control currency input-sm" data-error="Por favor, informe o saldo da conta." required>
+													
+												<div class="help-block with-errors"></div>
+											</div>
+						                </div>
+					                </div>
+					              </div>
+					              
+					              <div class="tab-pane" id="tab_tarifas">
+					                
+					                <div th:replace="page/tarifa/tarifa :: tarifa"></div>
+					                
+					              </div>
+					            </div>
+					          </div>
+					        </div>
+							
+														
+						</div>
+					</div>
+					
+					<div class="box-footer">
+						
+						<button id="salveButtonID" type="submit" class="btn btn-primary" style="width:100px;">Salvar</button>
+						<a class="btn btn-danger" th:href="@{/}" style="width:100px;">Cancelar</a>
+							
+					</div>
+					
+				</form>
+			</div>
+		</section>
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/helper/js/add-tarifa-datatable.js}"></script>
+		<script th:src="@{/helper/js/valida-campos-tarifa.js}"></script>
+	</th:block>
+</body>
+</html>

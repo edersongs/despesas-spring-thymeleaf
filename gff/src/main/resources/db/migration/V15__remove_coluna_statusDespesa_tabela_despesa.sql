@@ -1,0 +1,1 @@
+alter table tdespesa drop column statusDespesa;

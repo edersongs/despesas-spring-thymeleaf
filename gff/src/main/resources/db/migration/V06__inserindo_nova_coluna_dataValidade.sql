@@ -1,0 +1,1 @@
+alter table tcartao add column dataValidade date not null;

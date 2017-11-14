@@ -1,0 +1,1 @@
+alter table tcartao modify column dataValidade varchar(20) not null;

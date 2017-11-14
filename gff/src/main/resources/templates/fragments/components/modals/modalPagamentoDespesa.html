@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <style>
+      .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+      }
+      .example-modal .modal {
+        background: transparent !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body>
+  	<div th:id="${obj.codigoDespesa}" class="modal fade modalPagamentoDespesa" tabindex="-1" role="dialog" th:fragment="modalPagamentoDespesa">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Realizar Pagamento</h4>
+          </div>
+          
+          <form id="form" method="POST" th:action="@{/despesas/fazerPagamento/{codigoDespesa} (codigoDespesa=${obj.codigoDespesa})}">
+	          <div class="modal-body">
+	            <div class="row">
+		            <div align="center">
+						<h4 class="modal-title">Total da Despesa</h4>
+				        <span th:text="${#numbers.formatCurrency(obj.valor)}"></span>
+					</div>
+					
+					<div class="col-md-12">
+						<div align="center" th:if="${obj.status.codigo == 2 and obj.formaPagamento.valor != 1}">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+								<input id="valor" type="text" name="valorPagamento" placeholder="Pagar Quanto ?" th:disabled="${obj.status.codigo == 1}"
+									data-thousands="." data-decimal="," class="form-control currency input-sm" style="with:350px;">
+							</div>
+							<br></br>
+							<div th:if="${obj.status.codigo == 2 and obj.formaPagamento.valor == 1}" class="form-group">
+								<label>
+			                      <input type="radio" name="conta" value="4" class="minimal" checked>
+			                      	Caixa
+			                    </label>
+			                    
+			                    <label>
+			                      <input type="radio" name="conta" value="6" class="minimal">
+			                      	Bradesco
+			                    </label>
+							</div>
+						</div>
+						
+						<div align="center" th:if="${obj.status.codigo == 1 || obj.status.codigo == 3}">
+							<h2 th:if="${obj.status.codigo == 2 and obj.formaPagamento.valor == 1 || obj.status.codigo == 2 and obj.formaPagamento.valor == 1}"	style="color: red;">
+								<b th:text="Despesa será paga junto com Pagamento do Cartão"></b>
+							</h2>
+							<h2 th:if="${obj.status.codigo == 1}" style="color: green;"><b th:text="${obj.status.descricao}"></b></h2>
+							<h2 th:if="${obj.status.codigo == 3}" style="color: #FFA500;"><b th:text="${obj.status.descricao}"></b></h2>
+						</div>
+						
+						<div align="center" th:if="${obj.status.codigo == 2 and obj.formaPagamento.valor == 1}">
+							<h3 style="color: red;"><b>Será pago com Cartão</b></h3>
+						</div>
+					</div>
+				</div>
+	          </div>
+          
+	          
+	          <div class="modal-footer">
+	            <button type="submit" class="btn btn-success pull-left js-modal-pagamento-despesa-btn" th:disabled="${obj.status.codigo == 1 || obj.status.codigo == 3 || obj.formaPagamento.valor == 1}">
+	            	Pagar Despesa</button>
+	            	
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

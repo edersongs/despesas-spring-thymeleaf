@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <style>
+      .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+      }
+      .example-modal .modal {
+        background: transparent !important;
+      }
+    </style>
+  </head>
+  <body>
+  	<div id="modalCategoriaDespesaID" class="modal fade" th:fragment="modalNewCategoriaDespesa">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Nova Categoria de Despesa</h4>
+          </div>
+          
+          <div class="alert alert-danger hidden js-mensagem-cadastro-rapido-tipo-despesa" role="alert"></div>
+          
+          <form th:action="@{/despesas}">
+	          <div class="modal-body">
+	            <div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Nome</label> 
+							<input id="nomeModalID" type="text" class="form-control input-sm">
+						</div>
+					</div>
+					
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Tipo Despesa</label> 
+							<select id="tipoDespesaModalID" class="form-control select2 input-sm" style="width: 100%;">
+								<option label="" value=""></option>
+							</select>
+						</div>
+					</div>
+				</div>
+	          </div>
+          </form>
+	          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary pull-left js-modal-cadastro-tipo-despesa-salvar-btn">Salvar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
